@@ -1,14 +1,17 @@
 #CREATE THE BOARD
-
 def show_board(board):
     print(" ")  
-    print(" "*13," TIC TAC TOE ", " "*13)
-    print(" ")  
-    print(" "*13,"-" * 13," "*13)
-    for row in board: 
-        print(" " * 13,"|", row[0], "|", row[1], "|", row[2], "|"," " * 13)  
-        print(" "*13,"-" * 13," "*13) 
-    print(" ")  
+    print(" " * 13, " TIC TAC TOE ", " " * 13)
+    print(" ")
+    print("Pour jouer, entrez le numéro de la ligne")
+    print("et celui de la colonne. Exemple: 00")  
+    print(" ")   
+    print(" " * 13, " ", "0 ", " 1 ", " 2 ", " " * 13) 
+    print(" " * 13, "-" * 13, " " * 13)
+    for index, row in enumerate(board): 
+        print(" " * 11, index, "|", row[0], "|", row[1], "|", row[2], "|", " " * 13)  
+        print(" " * 13, "-" * 13, " " * 13) 
+    print(" ")   
 
 #CHECK FOR VICTORY
 
