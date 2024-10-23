@@ -41,7 +41,7 @@ def board_full(board):
 
 def player_move(player):
     while True:
-        move = input(f"Joueur {player}, entrez votre mouvement (ligne colonne) : ") 
+        move = input(f"Joueur {player}, entrez votre mouvement: ") 
         if len(move) == 2: 
             try:
                 line = int(move[0])
