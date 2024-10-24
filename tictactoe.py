@@ -41,7 +41,7 @@ def board_full(board):
 
 def player_move(player):
     while True:
-        move = input(f"Joueur {player}, entrez votre mouvement: ") 
+        move = input(f"Joueur {player}, entrez votre mouvement : ") 
         if len(move) == 2: 
             try:
                 line = int(move[0])
@@ -59,9 +59,9 @@ def player_move(player):
 
 def game_tic_tac_toe(): 
     board = [] 
-    for a in range(3):  
+    for row_index in range(3):  
         row = []
-        for a in range(3):  
+        for column_index in range(3):  
             row.append(' ')  
         board.append(row)  
     actual_player = 'X'
