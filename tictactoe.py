@@ -8,8 +8,8 @@ def show_board(board):
     print(" ")   
     print(" " * 13, " ", "0 ", " 1 ", " 2 ", " " * 13) 
     print(" " * 13, "-" * 13, " " * 13)
-    for index, row in enumerate(board): # loop through the board list with index and row
-        print(" " * 11, index, "|", row[0], "|", row[1], "|", row[2], "|", " " * 13) # print index and row content  
+    for index, row in enumerate(board):
+        print(" " * 11, index, "|", row[0], "|", row[1], "|", row[2], "|", " " * 13)   
         print(" " * 13, "-" * 13, " " * 13) 
     print(" ")   
 
@@ -17,14 +17,14 @@ def show_board(board):
 
 def victory(board, player): # check rows, columns, and diagonals for a win
     for row in range(3):   
-        if board[row][0] == player and board[row][1] == player and board[row][2] == player: # check row
-            return True # player won 
-    for col in range(3):  # check column     
+        if board[row][0] == player and board[row][1] == player and board[row][2] == player: 
+            return True 
+    for col in range(3):  
         if board[0][col] == player and board[1][col] == player and board[2][col] == player:
             return True  
-    if board[0][0] == player and board[1][1] == player and board[2][2] == player:  # check diagonal from left to right
+    if board[0][0] == player and board[1][1] == player and board[2][2] == player:
         return True   
-    if board[0][2] == player and board[1][1] == player and board[2][0] == player:  # check the other diagonal  
+    if board[0][2] == player and board[1][1] == player and board[2][0] == player: 
         return True   
     return False 
 
@@ -33,9 +33,9 @@ def victory(board, player): # check rows, columns, and diagonals for a win
 def board_full(board): 
     for row in board:  
         for cell in row: 
-            if cell == " ":  # if an empty cell is found board is not full
+            if cell == " ": 
                 return False  
-    return True  # no empty cells, so board is full
+    return True 
 
 # PLAYER MOVE
 
@@ -64,22 +64,22 @@ def game_tic_tac_toe():
         for column_index in range(3):  
             row.append(' ')  
         board.append(row)  
-    actual_player = 'X'  # start with player X
+    actual_player = 'X'  
     
     while True: # continue until a winner is found or the board is full
         show_board(board) 
-        line, column = player_move(actual_player) # get the current player's move
+        line, column = player_move(actual_player) 
         
         if board[line][column] == ' ': 
-            board[line][column] = actual_player # place the player's mark on the board
+            board[line][column] = actual_player 
             if victory(board, actual_player): # check for a win condition
                 show_board(board)
                 print(f"Félicitations ! Joueur {actual_player} a gagné !")
-                break # end the game
+                break 
             elif board_full(board): # check if the board is full, draw condition
                 show_board(board)
                 print("Match nul !")
-                break # end the game
+                break 
             actual_player = 'O' if actual_player == 'X' else 'X' # switch the player 
         else:
             print("Cette case est déjà occupée. Essayez à nouveau.")
