@@ -36,7 +36,7 @@ def board_full(board):
     return True 
 
 # PLAYER MOVE
-def player_move(player_name): 
+def player_move(player_name, board): 
     while True:
         move = input(f"{player_name}, entrez votre mouvement (ligne colonne) : ")
         if len(move) == 2: 
@@ -44,7 +44,10 @@ def player_move(player_name):
                 line = int(move[0]) 
                 column = int(move[1])
                 if 0 <= line <= 2 and 0 <= column <= 2:
-                    return line, column
+                    if board[line][column] == ' ':
+                        return line, column
+                    else:
+                        print("Cette case est déjà occupée. Essayez à nouveau.")
                 else:
                     print("Veuillez entrer des chiffres entre 0 et 2.")
             except ValueError: 
@@ -54,7 +57,7 @@ def player_move(player_name):
 
 # BOT MOVE
 def bot_move(board, bot, human):
-    if board[1][1] == ' ':       
+    if board[1][1] == ' ':
         return 1, 1
     for row in range(3): 
         for column in range(3):
@@ -62,24 +65,22 @@ def bot_move(board, bot, human):
                 board[row][column] = bot
                 if victory(board, bot):
                     return row, column  
-                board[row][column] = ' '  
-    block_moves = []
+                board[row][column] = ' ' 
     for row in range(3):  
         for column in range(3):
             if board[row][column] == ' ':
                 board[row][column] = human
                 if victory(board, human):
-                    block_moves.append((row, column))  
+                    board[row][column] = ' '  
+                    return row, column  
                 board[row][column] = ' '  
-    if block_moves:  
-        return block_moves[0] 
     for row in range(3): 
         for column in range(3):
             if board[row][column] == ' ':
                 return row, column 
     return -1, -1  
 
-# GAME PLAY FONCTION
+# GAME PLAY FUNCTION
 def game_tic_tac_toe(): 
     print(" ") 
     print(" " * 13, " TIC TAC TOE ", " " * 13)
@@ -95,35 +96,34 @@ def game_tic_tac_toe():
             player2_name = "Bot"
             break 
         print("Choix invalide, veuillez entrer 1 ou 2.")  
-    board = []
-    for row_index in range(3):  
-        row = []  
-        for column_index in range(3):  
-            row.append(' ') 
-        board.append(row) 
+
+    board = [[' ' for _ in range(3)] for _ in range(3)]
     actual_player = 'X'
     player_names = { 'X': player1_name, 'O': player2_name }
    
     while True:
-        show_board(board)
+        show_board(board)        
         if player_names[actual_player] == "Bot":
             print("Le bot réfléchit...")
-            line, column = bot_move(board, 'O', 'X')  
+            line, column = bot_move(board, 'O', 'X')
+            if board[line][column] == ' ':
+                board[line][column] = 'O'
+                if victory(board, 'O'):
+                    show_board(board)
+                    print("Le bot a gagné !")
+                    break
         else:
-            line, column = player_move(player_names[actual_player])
-       
-        if board[line][column] == ' ':
+            line, column = player_move(player_names[actual_player], board) 
             board[line][column] = actual_player
-            if victory(board, actual_player):
-                show_board(board)
-                print(f"Félicitations ! {player_names[actual_player]} a gagné !")
-                break
-            elif board_full(board):
-                show_board(board)
-                print("Match nul !")
-                break
-            actual_player = 'O' if actual_player == 'X' else 'X'
-        else:
-            print("Cette case est déjà occupée. Essayez à nouveau.")
+        if victory(board, actual_player):
+            show_board(board)
+            print(f"Félicitations ! {player_names[actual_player]} a gagné !")
+            break
+        elif board_full(board):
+            show_board(board)
+            print("Match nul !")
+            break
+
+        actual_player = 'O' if actual_player == 'X' else 'X'
 
 game_tic_tac_toe()
